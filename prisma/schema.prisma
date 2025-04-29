@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(cuid())
+  createdAt DateTime  @default(now())
+  biography String
+  email String @unique
+  handle String @unique
+  posts Post[]
+  following Follow[]  @relation("Following")
+  followers Follow[]  @relation("Followers")
+  digests Digest[]
+}
+
+model Post {
+  id String @id @default(cuid())
+  createdAt DateTime @default(now())
+  body String
+  userId String
+  digests Digest[]
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Follow {
+  createdAt DateTime @default(now())
+  followerId String
+  followingId String
+  follower User @relation("Followers", fields: [followerId], references: [id], onDelete: Cascade)
+  following User @relation("Following", fields: [followingId], references: [id], onDelete: Cascade)
+  @@id([followerId, followingId])
+  @@index([followerId])
+  @@index([followingId])
+}
+
+model Digest {
+  id String @id @default(cuid())
+  body String?
+  summarizationCount Int @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId String
+  posts Post[]
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
