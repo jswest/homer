@@ -1,6 +1,7 @@
 :root {
+  --color-bg: rgb(235, 153, 153);
   --font-display: "Doto";
-  --font-sans: "Roboto";
+  --font-sans: "Roboto Condensed";
   --unit: 20px;
 }
 
@@ -9,61 +10,13 @@
   padding: 0;
 }
 
-form {
-  width: 100%;
-}
-form button {
+html,
+body {
   background-color: black;
-  border: none;
-  box-sizing: border-box;
-  color: white;
-  cursor: pointer;
-  display: block;
-  font-family: var(--font-sans);
-  font-size: calc(var(--unit) * 0.75);
-  line-height: var(--unit);
-  padding: 5px;
-  text-align: left;
+  height: 100%;
   width: 100%;
 }
-form fieldset {
-  border: none;
-  margin-bottom: var(--unit);
-  width: 100%;
-}
-form label {
-  display: block;
-  font-family: var(--font-sans);
-  font-weight: 100;
-  width: 100%;
-}
-form input {
-  border: 1px solid black;
-  box-sizing: border-box;
-  display: block;
-  font-family: var(--font-sans);
-  font-size: calc(var(--unit) * 0.75);
-  line-height: var(--unit);
-  padding: 5px;
-  width: 100%;
-}
-form p.helper {
-  font-family: var(--font-sans);
-  font-size: calc(var(--unit) * 0.5);
-  font-style: italic;
-  font-weight: 400;
-}
-form textarea {
-  box-sizing: border-box;
-  display: block;
-  font-family: var(--font-sans);
-  font-size: calc(var(--unit) * 0.75);
-  font-weight: 200;
-  line-height: var(--unit);
-  height: 300px;
-  padding: 5px;
-  width: 100%;
-}
+
 
 h1 {
   font-family: var(--font-display);
@@ -78,4 +31,17 @@ h1 .title {
 p {
   font-family: var(--font-sans);
   font-size: calc(var(--unit) * 0.75);
+}
+
+table {
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+th,
+td {
+  border: 1px solid black;
+  font-family: var(--font-sans);
+  font-size: var(--unit);
+  padding: calc(var(--unit) * 0.25);
+  text-align: left;
 }

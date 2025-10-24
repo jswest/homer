@@ -20,6 +20,9 @@
 	"dependencies": {
 		"@auth/prisma-adapter": "^2.9.0",
 		"@prisma/client": "^6.6.0",
-		"marked": "^15.0.11"
+		"@supabase/ssr": "^0.6.1",
+		"@supabase/supabase-js": "^2.49.4",
+		"marked": "^15.0.11",
+		"openai": "^6.7.0"
 	}
 }

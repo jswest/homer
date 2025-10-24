@@ -1,5 +1,7 @@
 <script>
-  import NewUserForm from "$lib/components/NewUserForm.svelte";
+  import AuthForm from "$lib/components/AuthForm.svelte";
+
+  let { form } = $props();
 </script>
 
-<NewUserForm />
+<AuthForm {form} />
