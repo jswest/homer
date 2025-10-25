@@ -36,16 +36,12 @@
   }
 
   :global(.feed-info) h2 {
-    color: black;
-    font-family: var(--font-sans);
     font-size: calc(var(--unit) * 0.8);
     font-weight: 700;
     margin: 0 0 calc(var(--unit) * 0.3) 0;
   }
 
   :global(.feed-info) p {
-    color: black;
-    font-family: var(--font-sans);
     font-size: calc(var(--unit) * 0.7);
     font-weight: 400;
     margin: 0;
@@ -60,14 +56,10 @@
   }
 
   :global(.empty-state) p {
-    color: #666;
-    font-family: var(--font-sans);
-    font-size: calc(var(--unit) * 0.75);
     margin-bottom: calc(var(--unit) * 0.5);
   }
 
   :global(.empty-state) a {
-    color: black;
     font-weight: 900;
   }
 </style>

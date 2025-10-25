@@ -2,14 +2,13 @@
   let { type = 'button', variant = 'primary', children, ...props } = $props();
 </script>
 
-<button type={type} class="btn btn-{variant}" {...props}>
+<button type={type} class="btn btn-{variant} bordered bordered-hover" {...props}>
   {@render children()}
 </button>
 
 <style>
   .btn {
     background-color: black;
-    border: 3px solid black;
     box-sizing: border-box;
     color: white;
     cursor: pointer;
@@ -24,7 +23,7 @@
 
   .btn:hover {
     background-color: white;
-    color: black;
+    color: var(--color-lime);
   }
 
   .btn-secondary {
@@ -33,7 +32,7 @@
   }
 
   .btn-secondary:hover {
-    background-color: var(--color-bg);
+    background-color: var(--color-pink);
   }
 
   .btn-small {

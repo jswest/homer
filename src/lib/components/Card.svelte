@@ -2,13 +2,12 @@
   let { variant = 'white', children, class: className = '' } = $props();
 </script>
 
-<div class="card card-{variant} {className}">
+<div class="card card-{variant} bordered bordered-hover {className}">
   {@render children()}
 </div>
 
 <style>
   .card {
-    border: 3px solid black;
     box-sizing: border-box;
     margin-bottom: var(--unit);
     padding: var(--unit);
@@ -19,7 +18,15 @@
     background-color: white;
   }
 
+  .card-lime {
+    background-color: var(--color-lime);
+  }
+
   .card-pink {
-    background-color: var(--color-bg);
+    background-color: var(--color-pink);
+  }
+
+  .card-purple {
+    background-color: var(--color-purple);
   }
 </style>

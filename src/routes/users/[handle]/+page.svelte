@@ -9,12 +9,12 @@
 </script>
 
 <div class="user-feed">
-  <Card variant="pink" class="user-info">
+  <Card variant="lime" class="user-info">
     <div class="user-header">
       <div>
-        <h2>@{data.profileUser.handle}</h2>
+        <h2 class="text-display">@{data.profileUser.handle}</h2>
         {#if data.profileUser.biography}
-          <p class="bio">{data.profileUser.biography}</p>
+          <p class="text-body bio">{data.profileUser.biography}</p>
         {/if}
         <div class="stats">
           <span>{data.followerCount} follower{data.followerCount !== 1 ? 's' : ''}</span>
@@ -27,11 +27,11 @@
         <div class="follow-actions">
           {#if data.isFollowing}
             <form method="post" action="?/unfollow" use:enhance>
-              <button type="submit" class="btn-unfollow">Unfollow</button>
+              <button type="submit" class="btn-unfollow bordered bordered-hover">Unfollow</button>
             </form>
           {:else}
             <form method="post" action="?/follow" use:enhance>
-              <button type="submit" class="btn-follow">Follow</button>
+              <button type="submit" class="btn-follow bordered bordered-hover">Follow</button>
             </form>
           {/if}
         </div>
@@ -65,21 +65,13 @@
   }
 
   h2 {
-    color: black;
-    font-family: var(--font-display);
     font-size: calc(var(--unit) * 1.2);
-    font-weight: 900;
     margin-bottom: calc(var(--unit) * 0.3);
   }
 
   .bio {
-    color: black;
-    font-family: var(--font-sans);
     font-size: calc(var(--unit) * 0.75);
-    line-height: calc(var(--unit) * 1);
     margin-bottom: calc(var(--unit) * 0.5);
-    white-space: pre-wrap;
-    word-wrap: break-word;
   }
 
   .stats {
@@ -101,7 +93,6 @@
   .btn-follow,
   .btn-unfollow {
     background-color: black;
-    border: 3px solid black;
     color: white;
     cursor: pointer;
     font-family: var(--font-sans);

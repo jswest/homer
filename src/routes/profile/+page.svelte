@@ -11,11 +11,11 @@
   <h2>Your Profile</h2>
 
   {#if form?.success}
-    <p class="message success">{form.message}</p>
+    <p class="message success bordered bordered-hover">{form.message}</p>
   {/if}
 
   {#if form?.error}
-    <p class="message error">{form.error}</p>
+    <p class="message error bordered bordered-hover">{form.error}</p>
   {/if}
 
   <form method="post" action="?/update" use:enhance>
@@ -27,7 +27,7 @@
         value={data.user?.email || ''}
         disabled
       />
-      <p class="helper">Email cannot be changed (managed by Supabase Auth)</p>
+      <p class="text-helper">Email cannot be changed (managed by Supabase Auth)</p>
     </fieldset>
 
     <fieldset>
@@ -39,7 +39,7 @@
         maxlength="20"
         required
       />
-      <p class="helper">You must use only letters, numbers, and underscores. Max 20 characters.</p>
+      <p class="text-helper">You must use only letters, numbers, and underscores. Max 20 characters.</p>
     </fieldset>
 
     <fieldset>
@@ -49,7 +49,7 @@
         name="biography"
         maxlength="500"
       ></textarea>
-      <p class="helper">You have {500 - biography.length} character(s) remaining.</p>
+      <p class="text-helper">You have {500 - biography.length} character(s) remaining.</p>
     </fieldset>
 
     <fieldset>
@@ -64,15 +64,11 @@
   }
 
   h2 {
-    color: black;
-    font-family: var(--font-display);
     font-size: calc(var(--unit) * 1.25);
-    font-weight: 900;
     margin-bottom: var(--unit);
   }
 
   .message {
-    border: 3px solid black;
     font-family: var(--font-sans);
     font-size: calc(var(--unit) * 0.75);
     font-weight: 700;

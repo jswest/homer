@@ -6,18 +6,18 @@
 
 {#if clickable}
   <a href="/users/{user.handle}" class="user-card-link">
-    <Card variant="pink" class="user-card">
-      <div class="user-handle">@{user.handle}</div>
+    <Card variant="lime" class="user-card">
+      <div class="text-display user-handle">@{user.handle}</div>
       {#if user.biography}
-        <div class="user-bio">{user.biography}</div>
+        <div class="text-body user-bio">{user.biography}</div>
       {/if}
     </Card>
   </a>
 {:else}
-  <Card variant="pink" class="user-card">
-    <div class="user-handle">@{user.handle}</div>
+  <Card variant="lime" class="user-card">
+    <div class="text-display user-handle">@{user.handle}</div>
     {#if user.biography}
-      <div class="user-bio">{user.biography}</div>
+      <div class="text-body user-bio">{user.biography}</div>
     {/if}
   </Card>
 {/if}
@@ -33,19 +33,11 @@
   }
 
   .user-handle {
-    color: black;
-    font-family: var(--font-display);
     font-size: var(--unit);
-    font-weight: 900;
     margin-bottom: calc(var(--unit) * 0.5);
   }
 
   .user-bio {
-    color: black;
-    font-family: var(--font-sans);
     font-size: calc(var(--unit) * 0.75);
-    line-height: calc(var(--unit) * 1);
-    white-space: pre-wrap;
-    word-wrap: break-word;
   }
 </style>

@@ -1,5 +1,7 @@
 :root {
-  --color-bg: rgb(235, 153, 153);
+  --color-lime: rgb(120, 237, 91);
+  --color-pink: rgb(235, 153, 153);
+  --color-purple: rgb(103, 91, 237);
   --font-display: "Doto";
   --font-sans: "Roboto Condensed";
   --unit: 20px;
@@ -12,18 +14,71 @@
 
 html,
 body {
-  background-color: black;
+  background-color: var(--color-lime);
   height: 100%;
   width: 100%;
 }
 
+/* Typography utilities */
+.text-display {
+  color: black;
+  font-family: var(--font-display);
+  font-weight: 900;
+}
 
+.text-body {
+  color: black;
+  font-family: var(--font-sans);
+  line-height: calc(var(--unit) * 1);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.text-handle {
+  color: black;
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+.text-timestamp {
+  color: #666;
+  font-family: var(--font-sans);
+}
+
+.text-helper {
+  color: #666;
+  font-family: var(--font-sans);
+  font-size: calc(var(--unit) * 0.65);
+}
+
+/* Link utilities */
+.link-underline:hover {
+  text-decoration: underline;
+}
+
+/* Border utilities */
+.bordered {
+  border-top: 3px solid black;
+  border-left: 3px solid black;
+  border-right: 3px solid var(--color-purple);
+  border-bottom: 3px solid var(--color-purple);
+}
+
+.bordered-hover:hover {
+  border-top: 3px solid var(--color-purple);
+  border-left: 3px solid var(--color-purple);
+  border-right: 3px solid black;
+  border-bottom: 3px solid black;
+}
+
+/* Base elements */
 h1 {
   font-family: var(--font-display);
   font-size: calc(var(--unit) * 1.25);
   font-weight: 400;
   line-height: calc(var(--unit) * 1.25);
 }
+
 h1 .title {
   font-weight: 900;
 }
@@ -37,6 +92,7 @@ table {
   border-collapse: collapse;
   table-layout: fixed;
 }
+
 th,
 td {
   border: 1px solid black;

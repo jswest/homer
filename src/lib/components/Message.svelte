@@ -2,13 +2,12 @@
   let { type = 'info', children } = $props();
 </script>
 
-<div class="message message-{type}">
+<div class="message message-{type} bordered bordered-hover">
   {@render children()}
 </div>
 
 <style>
   .message {
-    border: 3px solid black;
     box-sizing: border-box;
     font-family: var(--font-sans);
     font-size: calc(var(--unit) * 0.75);
@@ -18,7 +17,7 @@
   }
 
   .message-success {
-    background-color: var(--color-bg);
+    background-color: var(--color-pink);
     color: black;
   }
 
@@ -28,7 +27,7 @@
   }
 
   .message-info {
-    background-color: var(--color-bg);
+    background-color: var(--color-pink);
     color: black;
   }
 </style>

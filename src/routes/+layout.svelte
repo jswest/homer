@@ -38,7 +38,7 @@
 
   .header-card,
   .content-card {
-    background-color: var(--color-bg);
+    background-color: var(--color-pink);
     border: 3px solid black;
     box-sizing: border-box;
     margin-bottom: var(--unit);
@@ -78,7 +78,7 @@
 
   nav a:hover,
   nav button:hover {
-    background-color: black;
+    background-color: var(--color-lime);
     color: white;
   }
 
@@ -114,6 +114,7 @@
     font-family: var(--font-sans);
     font-size: calc(var(--unit) * 0.75);
     line-height: calc(var(--unit) * 1);
+    outline: none;
     padding: calc(var(--unit) * 0.4);
     width: 100%;
   }
@@ -137,7 +138,7 @@
   }
 
   :global(button:hover) {
-    background-color: white;
+    background-color: var(--color-bbg);
     color: black;
   }
 

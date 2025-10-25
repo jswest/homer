@@ -47,18 +47,18 @@
 </script>
 
 <div class="AuthForm">
-  <h2>{isSignUp ? 'Sign Up' : 'Sign In'}</h2>
+  <h2 class="text-display">{isSignUp ? 'Sign Up' : 'Sign In'}</h2>
 
   {#if form?.error}
-    <p class="message error">{form.error}</p>
+    <p class="message error bordered bordered-hover">{form.error}</p>
   {/if}
 
   {#if form?.success}
-    <p class="message success">{form.message}</p>
+    <p class="message success bordered bordered-hover">{form.message}</p>
   {/if}
 
   {#if message}
-    <p class="message">{message}</p>
+    <p class="message bordered bordered-hover">{message}</p>
   {/if}
 
   <form method="post" action={isSignUp ? '?/signup' : '?/signin'} use:enhance>
@@ -82,7 +82,7 @@
         required
         autocomplete={isSignUp ? 'new-password' : 'current-password'}
       />
-      <p class="helper">Must be at least 6 characters</p>
+      <p class="text-helper">Must be at least 6 characters</p>
     </fieldset>
 
     {#if isSignUp}
@@ -96,7 +96,7 @@
           maxlength="20"
           required
         />
-        <p class="helper">
+        <p class="text-helper">
           Only letters, numbers, and underscores. Max 20 characters.
           {#if checkingHandle}
             <span class="checking">Checking...</span>
@@ -114,7 +114,7 @@
     </fieldset>
   </form>
 
-  <button class="toggle" onclick={toggleMode}>
+  <button class="toggle bordered bordered-hover" onclick={toggleMode}>
     {isSignUp ? 'Already have an account? Sign in' : "Don't have an account? Sign up"}
   </button>
 </div>
@@ -125,15 +125,11 @@
   }
 
   h2 {
-    color: black;
-    font-family: var(--font-display);
     font-size: calc(var(--unit) * 1.25);
-    font-weight: 900;
     margin-bottom: var(--unit);
   }
 
   .message {
-    border: 3px solid black;
     font-family: var(--font-sans);
     font-size: calc(var(--unit) * 0.75);
     font-weight: 700;
@@ -142,7 +138,7 @@
   }
 
   .message.success {
-    background-color: var(--color-bg);
+    background-color: var(--color-pink);
     color: black;
   }
 
@@ -167,8 +163,7 @@
   }
 
   .toggle {
-    background-color: var(--color-bg);
-    border: 3px solid black;
+    background-color: var(--color-pink);
     color: black;
     cursor: pointer;
     font-family: var(--font-sans);
@@ -181,6 +176,6 @@
   }
 
   .toggle:hover {
-    background-color: white;
+    background-color: var(--color-lime);
   }
 </style>

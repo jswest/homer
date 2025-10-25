@@ -7,10 +7,10 @@
 </script>
 
 <div class="create-post">
-  <h2>Create Post</h2>
+  <h2 class="text-display">Create Post</h2>
 
   {#if form?.error}
-    <p class="message error">{form.error}</p>
+    <p class="message error bordered bordered-hover">{form.error}</p>
   {/if}
 
   <form method="post" use:enhance>
@@ -22,7 +22,7 @@
         maxlength="500"
         required
       ></textarea>
-      <p class="helper">You have {500 - body.length} character(s) remaining.</p>
+      <p class="text-helper">You have {500 - body.length} character(s) remaining.</p>
     </fieldset>
 
     <fieldset>
@@ -30,7 +30,7 @@
     </fieldset>
   </form>
 
-  <p class="info">You can post up to 12 times per day.</p>
+  <p class="info bordered bordered-hover">You can post up to 12 times per day.</p>
 </div>
 
 <style>
@@ -39,16 +39,12 @@
   }
 
   h2 {
-    color: black;
-    font-family: var(--font-display);
     font-size: calc(var(--unit) * 1.25);
-    font-weight: 900;
     margin-bottom: var(--unit);
   }
 
   .message {
     background-color: white;
-    border: 3px solid black;
     font-family: var(--font-sans);
     font-size: calc(var(--unit) * 0.75);
     font-weight: 700;
@@ -61,8 +57,7 @@
   }
 
   .info {
-    background-color: var(--color-bg);
-    border: 3px solid black;
+    background-color: var(--color-pink);
     color: black;
     font-family: var(--font-sans);
     font-size: calc(var(--unit) * 0.65);

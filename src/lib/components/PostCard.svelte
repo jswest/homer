@@ -22,14 +22,14 @@
 
 <Card variant="white" class="post-card">
   <div class="post-header">
-    <a href="/users/{post.user.handle}" class="handle">@{post.user.handle}</a>
-    <span class="timestamp">{formatDate(post.createdAt)}</span>
+    <a href="/users/{post.user.handle}" class="text-handle link-underline handle">@{post.user.handle}</a>
+    <span class="text-timestamp timestamp">{formatDate(post.createdAt)}</span>
   </div>
-  <div class="post-body">
+  <div class="text-body post-body">
     {post.body}
   </div>
   {#if post.summarizationCount > 0}
-    <div class="summarization-badge">
+    <div class="summarization-badge bordered bordered-hover">
       Summarized {post.summarizationCount}x
     </div>
   {/if}
@@ -44,36 +44,21 @@
   }
 
   .handle {
-    color: black;
-    font-family: var(--font-display);
     font-size: calc(var(--unit) * 0.8);
-    font-weight: 700;
     text-decoration: none;
   }
 
-  .handle:hover {
-    text-decoration: underline;
-  }
-
   .timestamp {
-    color: #666;
-    font-family: var(--font-sans);
     font-size: calc(var(--unit) * 0.6);
   }
 
   .post-body {
-    color: black;
-    font-family: var(--font-sans);
     font-size: calc(var(--unit) * 0.75);
-    line-height: calc(var(--unit) * 1);
     margin-bottom: calc(var(--unit) * 0.5);
-    white-space: pre-wrap;
-    word-wrap: break-word;
   }
 
   .summarization-badge {
-    background-color: var(--color-bg);
-    border: 2px solid black;
+    background-color: var(--color-pink);
     color: black;
     display: inline-block;
     font-family: var(--font-sans);
