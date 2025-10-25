@@ -1,3 +1,5 @@
+export const runtime = 'node';
+
 import { createServerClient } from "@supabase/ssr";
 import { redirect } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
