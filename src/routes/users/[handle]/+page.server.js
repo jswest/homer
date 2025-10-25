@@ -1,7 +1,7 @@
 import prisma from '$lib/prisma.js';
 import { error, redirect, fail } from '@sveltejs/kit';
 
-export const load = async ({ params, locals }) => {
+export const load = async ({ params, locals, url }) => {
   const { session } = await locals.safeGetSession();
 
   if (!session) {
@@ -18,6 +18,21 @@ export const load = async ({ params, locals }) => {
   if (!user) {
     error(404, 'User not found');
   }
+
+  // Pagination
+  const page = parseInt(url.searchParams.get('page') || '1');
+  const perPage = 100;
+  const offset = (page - 1) * perPage;
+
+  // Get total count
+  const totalPosts = await prisma.post.count({
+    where: {
+      userId: user.id,
+      parentId: null,
+    },
+  });
+
+  const totalPages = Math.ceil(totalPosts / perPage);
 
   // Fetch posts from this user (only top-level posts, not replies)
   const posts = await prisma.post.findMany({
@@ -49,7 +64,8 @@ export const load = async ({ params, locals }) => {
     orderBy: {
       createdAt: 'desc',
     },
-    take: 50,
+    skip: offset,
+    take: perPage,
   });
 
   // Check if current user follows this user
@@ -87,6 +103,12 @@ export const load = async ({ params, locals }) => {
     isFollowing,
     followerCount,
     followingCount,
+    pagination: {
+      page,
+      totalPages,
+      totalPosts,
+      perPage,
+    },
   };
 };
 

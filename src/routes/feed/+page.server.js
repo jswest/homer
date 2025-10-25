@@ -1,8 +1,22 @@
 import prisma from '$lib/prisma.js';
 import { fail } from '@sveltejs/kit';
 
-export const load = async ({ locals }) => {
+export const load = async ({ locals, url }) => {
   const { session, user } = await locals.safeGetSession();
+
+  // Pagination
+  const page = parseInt(url.searchParams.get('page') || '1');
+  const perPage = 100;
+  const offset = (page - 1) * perPage;
+
+  // Get total count of top-level posts
+  const totalPosts = await prisma.post.count({
+    where: {
+      parentId: null,
+    },
+  });
+
+  const totalPages = Math.ceil(totalPosts / perPage);
 
   // Fetch recent posts with user info (only top-level posts, not replies)
   const posts = await prisma.post.findMany({
@@ -33,7 +47,8 @@ export const load = async ({ locals }) => {
     orderBy: {
       createdAt: 'desc',
     },
-    take: 50, // Show last 50 posts
+    skip: offset,
+    take: perPage,
   });
 
   return {
@@ -41,6 +56,12 @@ export const load = async ({ locals }) => {
     user: locals.user,
     supabaseUser: user,
     posts,
+    pagination: {
+      page,
+      totalPages,
+      totalPosts,
+      perPage,
+    },
   };
 };
 

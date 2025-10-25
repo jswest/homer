@@ -72,8 +72,11 @@ const authGuard = async ({ event, resolve }) => {
     return resolve(event);
   }
 
-  // Protect all routes except the home page (sign-in page)
-  if (!event.locals.session && event.url.pathname !== "/") {
+  // Protect all routes except the home page (sign-in page) and everyone feed
+  const publicPaths = ["/", "/feed"];
+  const isPublicPath = publicPaths.includes(event.url.pathname);
+
+  if (!event.locals.session && !isPublicPath) {
     redirect(303, "/");
   }
 

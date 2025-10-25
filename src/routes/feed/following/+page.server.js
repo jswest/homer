@@ -1,7 +1,7 @@
 import prisma from '$lib/prisma.js';
 import { redirect, fail } from '@sveltejs/kit';
 
-export const load = async ({ locals }) => {
+export const load = async ({ locals, url }) => {
   const { session } = await locals.safeGetSession();
 
   if (!session) {
@@ -23,6 +23,23 @@ export const load = async ({ locals }) => {
   });
 
   const followingIds = following.map((f) => f.followingId);
+
+  // Pagination
+  const page = parseInt(url.searchParams.get('page') || '1');
+  const perPage = 100;
+  const offset = (page - 1) * perPage;
+
+  // Get total count
+  const totalPosts = await prisma.post.count({
+    where: {
+      userId: {
+        in: followingIds,
+      },
+      parentId: null,
+    },
+  });
+
+  const totalPages = Math.ceil(totalPosts / perPage);
 
   // Fetch posts from followed users (only top-level posts, not replies)
   const posts = await prisma.post.findMany({
@@ -56,7 +73,8 @@ export const load = async ({ locals }) => {
     orderBy: {
       createdAt: 'desc',
     },
-    take: 50,
+    skip: offset,
+    take: perPage,
   });
 
   return {
@@ -64,6 +82,12 @@ export const load = async ({ locals }) => {
     user: locals.user,
     posts,
     followingCount: followingIds.length,
+    pagination: {
+      page,
+      totalPages,
+      totalPosts,
+      perPage,
+    },
   };
 };
 

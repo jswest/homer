@@ -50,6 +50,32 @@
       {/each}
     {/if}
   </div>
+
+  {#if data.pagination.totalPages > 1}
+    <Card variant="lime" class="pagination">
+      <div class="pagination-controls">
+        {#if data.pagination.page > 1}
+          <a href="/users/{data.profileUser.handle}?page={data.pagination.page - 1}" class="page-button bordered bordered-hover">
+            ← Previous
+          </a>
+        {:else}
+          <span class="page-button disabled">← Previous</span>
+        {/if}
+
+        <span class="page-info">
+          Page {data.pagination.page} of {data.pagination.totalPages}
+        </span>
+
+        {#if data.pagination.page < data.pagination.totalPages}
+          <a href="/users/{data.profileUser.handle}?page={data.pagination.page + 1}" class="page-button bordered bordered-hover">
+            Next →
+          </a>
+        {:else}
+          <span class="page-button disabled">Next →</span>
+        {/if}
+      </div>
+    </Card>
+  {/if}
 </div>
 
 <style>
@@ -130,5 +156,43 @@
     color: #666;
     font-family: var(--font-sans);
     font-size: calc(var(--unit) * 0.75);
+  }
+
+  .pagination-controls {
+    align-items: center;
+    display: flex;
+    gap: var(--unit);
+    justify-content: space-between;
+  }
+
+  .page-button {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    font-family: var(--font-sans);
+    font-size: calc(var(--unit) * 0.65);
+    font-weight: 700;
+    padding: calc(var(--unit) * 0.3) calc(var(--unit) * 0.5);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .page-button:hover {
+    background-color: white;
+    color: black;
+  }
+
+  .page-button.disabled {
+    background-color: #ddd;
+    border: 3px solid #999;
+    color: #999;
+    cursor: not-allowed;
+  }
+
+  .page-info {
+    color: black;
+    font-family: var(--font-sans);
+    font-size: calc(var(--unit) * 0.7);
+    font-weight: 700;
   }
 </style>
