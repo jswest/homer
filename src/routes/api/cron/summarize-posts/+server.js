@@ -31,7 +31,7 @@ export async function GET({ request }) {
           lt: 6,
         },
       },
-      take: 20, // Process 20 posts per run to avoid timeouts
+      take: 100, // Process 20 posts per run to avoid timeouts
       orderBy: {
         createdAt: 'asc', // Oldest first
       },
@@ -51,11 +51,9 @@ export async function GET({ request }) {
             },
             {
               role: 'user',
-              content: `Summarize this text to be shorter:\n\n${post.body}`,
+              content: `Summarize this text to be shorter:\n\n---\n\n${post.body}`,
             },
           ],
-          temperature: 0.7,
-          max_tokens: 300,
         });
 
         const summary = completion.choices[0]?.message?.content?.trim();
