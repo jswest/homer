@@ -59,6 +59,12 @@
     until all we have left to do is repeat a single word again and again,
     certain we finally understand.
   </p>
+  <p>
+    If you want access, reach out to me on Bluesky, I'm <a
+      href="https://bsky.app/profile/johnwest.bsky.social"
+      >@johnwest.bsky.social</a
+    >.
+  </p>
 
   <h1>Who made this?</h1>
   <p>
