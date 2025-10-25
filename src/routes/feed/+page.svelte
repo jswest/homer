@@ -12,7 +12,7 @@
   {/if}
 
   <Card variant="pink" class="feed-info">
-    <h2>Everyone Feed</h2>
+    <h2 class="text-display">Everyone Feed</h2>
     <p>All posts from all users</p>
   </Card>
 

@@ -12,7 +12,7 @@
   {/if}
 
   <Card variant="pink" class="feed-info">
-    <h2>Following Feed</h2>
+    <h2 class="text-display">Following Feed</h2>
     <p>You're following {data.followingCount} {data.followingCount === 1 ? 'person' : 'people'}</p>
   </Card>
 
