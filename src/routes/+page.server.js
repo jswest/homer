@@ -1,6 +1,15 @@
 import { redirect, fail } from '@sveltejs/kit';
 import prisma from '$lib/prisma.js';
 
+export const load = async ({ locals }) => {
+  const { session } = await locals.safeGetSession();
+
+  return {
+    session,
+    user: locals.user,
+  };
+};
+
 export const actions = {
   signin: async ({ request, locals }) => {
     const formData = await request.formData();
@@ -19,7 +28,7 @@ export const actions = {
       });
     }
 
-    redirect(303, '/feed');
+    return { success: true };
   },
 
   signup: async ({ request, locals }) => {

@@ -80,11 +80,6 @@ const authGuard = async ({ event, resolve }) => {
     redirect(303, "/");
   }
 
-  // Redirect to feed if already logged in and trying to access home page
-  if (event.locals.session && event.url.pathname === "/") {
-    redirect(303, "/feed");
-  }
-
   return resolve(event);
 };
 
