@@ -19,16 +19,30 @@ export const load = async ({ params, locals }) => {
     error(404, 'User not found');
   }
 
-  // Fetch posts from this user
+  // Fetch posts from this user (only top-level posts, not replies)
   const posts = await prisma.post.findMany({
     where: {
       userId: user.id,
+      parentId: null, // Only top-level posts
     },
     include: {
       user: {
         select: {
           handle: true,
           biography: true,
+        },
+      },
+      replies: {
+        include: {
+          user: {
+            select: {
+              handle: true,
+              biography: true,
+            },
+          },
+        },
+        orderBy: {
+          createdAt: 'asc',
         },
       },
     },
@@ -77,6 +91,30 @@ export const load = async ({ params, locals }) => {
 };
 
 export const actions = {
+  deletePost: async ({ request, locals }) => {
+    if (!locals.user?.isAdmin) {
+      return fail(403, { error: 'Unauthorized' });
+    }
+
+    const formData = await request.formData();
+    const postId = formData.get('postId');
+
+    if (!postId) {
+      return fail(400, { error: 'Post ID is required' });
+    }
+
+    try {
+      await prisma.post.delete({
+        where: { id: postId },
+      });
+    } catch (error) {
+      console.error('Error deleting post:', error);
+      return fail(500, { error: 'Failed to delete post' });
+    }
+
+    return { success: true, message: 'Post deleted successfully' };
+  },
+
   follow: async ({ params, locals }) => {
     const { session } = await locals.safeGetSession();
 

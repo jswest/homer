@@ -28,6 +28,28 @@ export const actions = {
     const password = formData.get('password');
     const handle = formData.get('handle');
 
+    // Check if email is whitelisted
+    try {
+      const whitelisted = await prisma.emailWhitelist.findUnique({
+        where: { email },
+      });
+
+      if (!whitelisted) {
+        return fail(403, {
+          error: 'This email is not authorized to create an account. Please contact an administrator.',
+          email,
+          handle,
+        });
+      }
+    } catch (error) {
+      console.error('Error checking whitelist:', error);
+      return fail(500, {
+        error: 'Failed to verify email authorization',
+        email,
+        handle,
+      });
+    }
+
     // Validate handle
     if (!handle || handle.length === 0) {
       return fail(400, {

@@ -46,7 +46,7 @@
       </Card>
     {:else}
       {#each data.posts as post (post.id)}
-        <PostCard {post} currentUserId={data.currentUser?.id} />
+        <PostCard {post} currentUserId={data.currentUser?.id} isAdmin={data.currentUser?.isAdmin || false} />
       {/each}
     {/if}
   </div>

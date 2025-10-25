@@ -1,7 +1,7 @@
-import { fail, redirect } from '@sveltejs/kit';
+import { fail, redirect, error } from '@sveltejs/kit';
 import prisma from '$lib/prisma.js';
 
-export const load = async ({ locals }) => {
+export const load = async ({ params, locals }) => {
   const { session } = await locals.safeGetSession();
 
   if (!session) {
@@ -12,13 +12,38 @@ export const load = async ({ locals }) => {
     redirect(303, '/profile');
   }
 
+  // Fetch the parent post
+  const parentPost = await prisma.post.findUnique({
+    where: {
+      id: params.postId,
+    },
+    include: {
+      user: {
+        select: {
+          handle: true,
+          biography: true,
+        },
+      },
+    },
+  });
+
+  if (!parentPost) {
+    error(404, 'Post not found');
+  }
+
+  // Can't reply to a reply (only one level deep)
+  if (parentPost.parentId) {
+    error(400, 'Cannot reply to a reply. You can only reply to top-level posts.');
+  }
+
   return {
     user: locals.user,
+    parentPost,
   };
 };
 
 export const actions = {
-  default: async ({ request, locals }) => {
+  default: async ({ request, params, locals }) => {
     const { session } = await locals.safeGetSession();
 
     if (!session) {
@@ -37,19 +62,40 @@ export const actions = {
     // Validate post body
     if (!body || body.length === 0) {
       return fail(400, {
-        error: 'Post body is required',
+        error: 'Reply body is required',
         body,
       });
     }
 
     if (body.length > 500) {
       return fail(400, {
-        error: 'Post must be 500 characters or less',
+        error: 'Reply must be 500 characters or less',
         body,
       });
     }
 
-    // Check rate limit: 12 posts per day
+    // Verify parent post exists and is not a reply
+    const parentPost = await prisma.post.findUnique({
+      where: {
+        id: params.postId,
+      },
+    });
+
+    if (!parentPost) {
+      return fail(404, {
+        error: 'Post not found',
+        body,
+      });
+    }
+
+    if (parentPost.parentId) {
+      return fail(400, {
+        error: 'Cannot reply to a reply',
+        body,
+      });
+    }
+
+    // Check rate limit: 12 posts per day (replies count as posts)
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -69,13 +115,14 @@ export const actions = {
       });
     }
 
-    // Create post and initial body history entry
+    // Create reply and initial body history entry
     try {
       await prisma.$transaction(async (tx) => {
         const post = await tx.post.create({
           data: {
             body,
             userId: locals.user.id,
+            parentId: params.postId,
           },
         });
 
@@ -88,14 +135,14 @@ export const actions = {
         });
       });
     } catch (error) {
-      console.error('Error creating post:', error);
+      console.error('Error creating reply:', error);
       return fail(500, {
-        error: 'Failed to create post',
+        error: 'Failed to create reply',
         body,
       });
     }
 
-    // Redirect after successful creation
+    // Redirect back to feed
     redirect(303, '/feed');
   },
 };

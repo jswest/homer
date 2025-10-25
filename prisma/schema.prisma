@@ -5,6 +5,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -13,6 +14,7 @@ model User {
   biography String @db.VarChar(500)
   email String @unique
   handle String @unique @db.VarChar(20)
+  isAdmin Boolean @default(false)
   posts Post[]
   following Follow[]  @relation("Following")
   followers Follow[]  @relation("Followers")
@@ -25,6 +27,27 @@ model Post {
   summarizationCount Int @default(0)
   userId String
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Reply relationships
+  parentId String?
+  parent Post? @relation("PostReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies Post[] @relation("PostReplies")
+
+  // History
+  bodies PostBody[]
+
+  @@index([parentId])
+}
+
+model PostBody {
+  id String @id @default(cuid())
+  body String @db.VarChar(500)
+  postId String
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@index([postId])
+  @@index([createdAt])
 }
 
 model Follow {
@@ -36,4 +59,12 @@ model Follow {
   @@id([followerId, followingId])
   @@index([followerId])
   @@index([followingId])
+}
+
+model EmailWhitelist {
+  id String @id @default(cuid())
+  email String @unique
+  createdAt DateTime @default(now())
+
+  @@index([email])
 }
